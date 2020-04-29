@@ -1,2 +1,11 @@
+This is an Asp .net core API with tecnlogies bellow:
 
-Asp .net core web api application - DDD - Mediator Pattern - RabbitMQ - JWT Authentication - MongoDB - AutoMapper - FluentValidator
+-DDD 
+-Mediator Pattern 
+-RabbitMQ 
+-JWT Authentication 
+-MongoDB 
+-AutoMapper 
+-Fluent Validator
+-Redis
+-Docker and Kubernetes
