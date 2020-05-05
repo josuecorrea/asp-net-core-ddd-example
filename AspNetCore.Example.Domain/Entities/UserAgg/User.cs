@@ -57,6 +57,12 @@ namespace AspNetCore.Example.Domain.Entities.UserAgg
             }
         }
 
+        public void CreateHashPassword(string password)
+        {
+            Password = password;
+            SetPasswordHash();
+        }
+
         public bool ValidatePassword(string password)
         {
             using (var md5 = MD5.Create())

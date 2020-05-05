@@ -12,7 +12,7 @@ namespace AspNetCore.Example.Domain.Contracts.Repositories
         Task<List<User>> GetUsersByMasterId(Guid userMasterId);
         Task DeleteUserById(Guid userId);
         Task<bool> UpdateUser(User user);
-        Task<bool> RedefinePassword(Guid id, string passwordNew);
+        Task<bool> SetNewPassword(Guid id, string passwordNew);
         Task<User> GetUserById(Guid Id);
         Task<List<UserCompany>> GetAllUserCompany(Guid id);
         Task<bool> ChangeLinkWithTheCompany(Guid id,List<UserCompany> userCompanies);        

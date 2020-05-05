@@ -98,7 +98,7 @@ namespace AspNetCore.Example.Infra.Repositories
             return await result.FirstOrDefaultAsync();
         }
 
-        public async Task<bool> RedefinePassword(Guid id, string passwordNew)
+        public async Task<bool> SetNewPassword(Guid id, string passwordNew)
         {
             var update = Builders<User>.Update.Set(c => c.Password, passwordNew);
 

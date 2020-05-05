@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using AspNetCore.Example.Application.Mapping.Param;
+﻿using AspNetCore.Example.Application.Mapping.Param;
 using AspNetCore.Example.Application.Mapping.Request;
 using AspNetCore.Example.Domain.Contracts.Repositories;
 using AspNetCore.Example.Domain.Entities.UserAgg;
+using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -49,12 +46,14 @@ namespace AspNetCore.Example.Application.Handler
         public async Task<string> Handle(RedefinePasswordRequest request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetUserById(request.Id.Value);
+
             if (!user.ValidatePassword(request.OldPassword))
                 return await Task.FromResult(Message.SenhasDivergentes);
 
-            request.GeneratePassword();
+            user.CreateHashPassword(request.NewPassword);
 
-            await _userRepository.RedefinePassword(request.Id.Value, request.NewPassword);
+            await _userRepository.SetNewPassword(request.Id.Value, request.NewPassword);
+
             return await Task.FromResult(Message.OperacaoRealizadaComSucesso);
         }
 

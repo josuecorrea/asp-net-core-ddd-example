@@ -18,7 +18,5 @@ namespace AspNetCore.Example.Application.Mapping.Dto.User
         public bool IsActive { get; private set; }
 
         public List<UserCompany> Companies { get; private set; }
-
-        public UserPermissions UserPermissions { get; private set; }
     }
 }
