@@ -8,8 +8,6 @@ namespace AspNetCore.Example.Infra.Repositories.Base
     public class BaseHttp<HttpParam, HttpResult>  where HttpParam : IHttpParam
                                                   where HttpResult : HttpBaseResult, new() 
     {
-              
-
         public async Task<HttpResult> GetBasic(HttpParam param)
         {          
             var client = new RestClient(param.GetApiUrl());

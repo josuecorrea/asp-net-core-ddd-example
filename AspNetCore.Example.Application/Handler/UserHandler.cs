@@ -21,11 +21,13 @@ namespace AspNetCore.Example.Application.Handler
     {
         private IUserRepository _userRepository;
         private IMapper _mapper;
+
         public UserHandler( IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;
         }
+
         public async Task<string> Handle(DeleteUserRequest request, CancellationToken cancellationToken)
         {
             await _userRepository.DeleteUserById(request.Id.Value);
@@ -51,6 +53,7 @@ namespace AspNetCore.Example.Application.Handler
                 return await Task.FromResult(Message.SenhasDivergentes);
 
             request.GeneratePassword();
+
             await _userRepository.RedefinePassword(request.Id.Value, request.NewPassword);
             return await Task.FromResult(Message.OperacaoRealizadaComSucesso);
 

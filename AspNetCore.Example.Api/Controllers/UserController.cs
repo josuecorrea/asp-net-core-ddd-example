@@ -1,10 +1,9 @@
-﻿using AutoMapper;
-using AspNetCore.Example.Api.Validators;
+﻿using AspNetCore.Example.Api.Validators;
 using AspNetCore.Example.Application.Mapping.Param;
 using AspNetCore.Example.Application.Mapping.Request;
 using AspNetCore.Example.Application.Mapping.Response.UserResponse;
 using AspNetCore.Example.Domain.Contracts.Repositories;
-using AspNetCore.Example.Domain.Entities.UserAgg;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,22 +13,18 @@ using Serilog;
 using System;
 using System.Linq;
 using System.Net.Mime;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace AspNetCore.Example.Api.Controllers
 {
-    //[Authorize("Bearer")]
+    [Authorize("Bearer")]
     [Route("api/user")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
         readonly ILogger<UserController> _log;
-        readonly IDiagnosticContext _diagnosticContext;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
-
-        static int _callCount;
 
         public UserController(IUserRepository userRepository,
                               ILogger<UserController> log,
@@ -39,12 +34,11 @@ namespace AspNetCore.Example.Api.Controllers
         {
             _userRepository = userRepository;
             _log = log;
-            _diagnosticContext = diagnosticContext ?? throw new ArgumentNullException(nameof(diagnosticContext));
             _mapper = mapper;
             _mediator = mediator;
         }
 
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         [Route("newuser")]
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]

@@ -23,6 +23,7 @@ namespace AspNetCore.Example.Api
 
             //Handlers
             services.AddMediatR(typeof(GetInfomationByDocumentHandler).Assembly);
+            services.AddMediatR(typeof(UserHandler).Assembly);
         }
     }
 }
