@@ -23,6 +23,7 @@ namespace AspNetCore.Example.Api
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IMessageReceiverService, MessageReceiverService>();
+            services.AddScoped<IUserContextAcessorRepository, UserContextAcessorRepository>();
 
             //Handlers
             services.AddMediatR(typeof(GetInfomationByDocumentHandler).Assembly);

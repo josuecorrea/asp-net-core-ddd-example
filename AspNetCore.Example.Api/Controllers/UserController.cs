@@ -48,6 +48,7 @@ namespace AspNetCore.Example.Api.Controllers
         {
             try
             {
+                
                 _log.LogInformation("Criando novo usuário: {@newUser}", newUser);
 
                 var validator = await new NewUserValidator().ValidateAsync(newUser);
@@ -104,7 +105,7 @@ namespace AspNetCore.Example.Api.Controllers
             }
         }
 
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         [Route("deleteuser")]
         [HttpDelete]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -134,7 +135,7 @@ namespace AspNetCore.Example.Api.Controllers
             }
         }
 
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         [Route("redefinepassword")]
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]

@@ -60,8 +60,7 @@ namespace AspNetCore.Example.Api.Controllers
                  var response = new GetInfomationByDocumentResponse(erroMessage);
 
                 return BadRequest(response);
-            }
-           
+            }           
         }
     }
 }
