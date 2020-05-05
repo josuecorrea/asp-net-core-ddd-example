@@ -6,6 +6,7 @@ using AspNetCore.Example.Infra.Repositories;
 using AspNetCore.Example.Infra.Repositories.Interfaces;
 using AspNetCore.Example.Infra.Services.Contracts;
 using AspNetCore.Example.Infra.Services.Implements;
+using EasyNetQ;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,6 +25,11 @@ namespace AspNetCore.Example.Api
             //Handlers
             services.AddMediatR(typeof(GetInfomationByDocumentHandler).Assembly);
             services.AddMediatR(typeof(UserHandler).Assembly);
+
+            //BUS
+            string rabbitmqConnection = "";
+            services.AddSingleton<IBus>(RabbitHutch.CreateBus(rabbitmqConnection));
+            services.BuildServiceProvider().GetService<IMessageReceiverService>().Receiver<object>();
         }
     }
 }

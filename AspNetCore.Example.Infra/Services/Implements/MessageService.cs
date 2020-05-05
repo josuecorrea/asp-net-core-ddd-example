@@ -28,8 +28,7 @@ namespace AspNetCore.Example.Infra.Services.Implements
             _exchangeName = configuration.GetSection("RabbitMQConfigurations:LimitsEventSender:ExchangeName").Value;
         }
 
-
-        private async Task SendQueueAsync<T>(T message, string queueName) where T : class
+        public async Task SendQueueAsync<T>(T message, string queueName) where T : class
         {
             if (!_bus.IsConnected)
             {
@@ -50,10 +49,9 @@ namespace AspNetCore.Example.Infra.Services.Implements
             ).ConfigureAwait(false);
         }
 
-        private async Task SendTopicAsync<T>(T message, string routeKey = "", bool isMandatory = false) where T : class
+        public async Task SendTopicAsync<T>(T message, string routeKey = "", bool isMandatory = false) where T : class
         {
             var exchange = new ExchangeConfig();
-
 
             if (!_bus.IsConnected)
             {
@@ -74,6 +72,6 @@ namespace AspNetCore.Example.Infra.Services.Implements
             await policy.ExecuteAsync(async () =>
                 await _advancedBus.PublishAsync(exchange, routeKey, isMandatory, new Message<T>(message)).ConfigureAwait(false)
             ).ConfigureAwait(false);
-        }
+        }       
     }
 }

@@ -1,14 +1,10 @@
-﻿using EasyNetQ;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Polly;
-using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace AspNetCore.Example.Infra.Services.Contracts
 {
     public interface IMessageService
     {
-        
+        Task SendQueueAsync<T>(T message, string queueName) where T : class;
+        Task SendTopicAsync<T>(T message, string routeKey = "", bool isMandatory = false) where T : class;
     }
 }
