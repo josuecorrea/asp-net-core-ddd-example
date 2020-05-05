@@ -21,6 +21,8 @@ namespace AspNetCore.Example.Api
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ICompanyGateway, CompanyGateway>();
             services.AddScoped<ICacheService, CacheService>();
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IMessageReceiverService, MessageReceiverService>();
 
             //Handlers
             services.AddMediatR(typeof(GetInfomationByDocumentHandler).Assembly);
