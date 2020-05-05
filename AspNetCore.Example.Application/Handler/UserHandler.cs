@@ -56,8 +56,6 @@ namespace AspNetCore.Example.Application.Handler
 
             await _userRepository.RedefinePassword(request.Id.Value, request.NewPassword);
             return await Task.FromResult(Message.OperacaoRealizadaComSucesso);
-
-
         }
 
         public async Task<string> Handle(ChangeLinkWithTheCompanyRequest request, CancellationToken cancellationToken)

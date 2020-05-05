@@ -11,7 +11,7 @@ namespace AspNetCore.Example.Infra.Repositories
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        private static MongoDBContext<User> _dbContext = new MongoDBContext<User>();
+        private static readonly MongoDBContext<User> _dbContext = new MongoDBContext<User>();
 
         public UserRepository() : base(_dbContext) { }
 
@@ -28,27 +28,31 @@ namespace AspNetCore.Example.Infra.Repositories
             var user = await GetUserById(id);
             if (user == null)
                 return false;
+
             var update = Builders<User>.Update.Set(c => c.Companies, userCompanies);
-            await _dbContext.GetColection.UpdateOneAsync(c => c.Id == user.Id, update);
-            return true;
+
+            var updateResult =  await _dbContext
+                                        .GetColection
+                                        .UpdateOneAsync(c => c.Id == user.Id, update)
+                                        .ConfigureAwait(false);
+
+            return updateResult.ModifiedCount > 0;
         }
 
         public async Task DeleteUserById(Guid userId)
         {
-            await _dbContext.GetColection.DeleteOneAsync(c => c.Id == userId);
+            await _dbContext.GetColection
+                            .DeleteOneAsync(c => c.Id == userId)
+                            .ConfigureAwait(false);
         }
 
         public async Task<bool> ExistsUser(string userName)
         {
-            var builder = Builders<User>.Filter;
-            var filter = builder.Eq(user => user.Name, userName);
+            var result = await _dbContext.GetColection
+                                .FindAsync(c => c.Name.Equals(userName))
+                                .ConfigureAwait(false);
 
-            var result = await _dbContext.GetColection.FindAsync(filter);
-
-            if (result.Any())
-                return true;
-
-            return false;
+            return result.Any();
         }
 
         public async Task<List<UserCompany>> GetAllUserCompany(Guid id)
@@ -57,7 +61,8 @@ namespace AspNetCore.Example.Infra.Repositories
 
             var queryResult = await _dbContext
                                 .GetColection
-                                .FindAsync(c => c.Id == id);
+                                .FindAsync(c => c.Id == id)
+                                .ConfigureAwait(false);
 
             companies = queryResult?.FirstOrDefault().Companies;
 
@@ -75,17 +80,20 @@ namespace AspNetCore.Example.Infra.Repositories
 
         public async Task<List<User>> GetUsersByMasterId(Guid userMasterId)
         {
-            var users = await _dbContext.GetColection.FindAsync(c => c.UserMasterId == userMasterId);
+            var users = await _dbContext
+                                .GetColection
+                                .FindAsync(c => c.UserMasterId == userMasterId)
+                                .ConfigureAwait(false);
 
             return users.ToList();
         }
 
         public async Task<User> Login(string email)
         {
-            var builder = Builders<User>.Filter;
-            var filter = builder.Eq(user => user.Email, email);
-
-            var result = await _dbContext.GetColection.FindAsync(filter).ConfigureAwait(false);
+            var result = await _dbContext
+                                .GetColection
+                                .FindAsync(c=>c.Email.Equals(email))
+                                .ConfigureAwait(false);
 
             return await result.FirstOrDefaultAsync();
         }
@@ -93,8 +101,13 @@ namespace AspNetCore.Example.Infra.Repositories
         public async Task<bool> RedefinePassword(Guid id, string passwordNew)
         {
             var update = Builders<User>.Update.Set(c => c.Password, passwordNew);
-            await _dbContext.GetColection.UpdateOneAsync(c => c.Id == id, update);
-            return true;
+
+            var updateResult = await _dbContext
+                                       .GetColection
+                                       .UpdateOneAsync(c => c.Id == id, update)
+                                       .ConfigureAwait(false);
+
+            return updateResult.ModifiedCount > 0;
         }
 
         public async Task<bool> UpdateUser(User user)
@@ -108,9 +121,12 @@ namespace AspNetCore.Example.Infra.Repositories
                                               .Set(c => c.IsActive, user.IsActive)
                                               .Set(c => c.Companies, user.Companies);
 
-            await _dbContext.GetColection.UpdateOneAsync(c => c.Id == user.Id, update);
+            var updateResult = await _dbContext
+                                         .GetColection
+                                         .UpdateOneAsync(c => c.Id == user.Id, update)
+                                         .ConfigureAwait(false);
 
-            return true;
+            return updateResult.ModifiedCount > 0;
         }
     }
 }
