@@ -1,11 +1,11 @@
-﻿using AspNetCore.Example.Api.Validators;
-using AspNetCore.Example.Application.Mapping.Request;
+﻿using AspNetCore.Example.Application.Mapping.Request;
 using AspNetCore.Example.Application.Mapping.Result.GetInfomationByDocument;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
@@ -35,22 +35,27 @@ namespace AspNetCore.Example.Api.Controllers
                 var getInfomationByDocumentRequest = new GetInfomationByDocumentRequest { Document = document };                
 
                 //TODO: CRIA VALIDATOR DO MEDIATOR
-                var validator = await new GetInfomationByDocumentValidator().ValidateAsync(getInfomationByDocumentRequest);
+                //var validator = await new GetInfomationByDocumentValidator().ValidateAsync(getInfomationByDocumentRequest);
 
-                if (!validator.IsValid)
+                //if (!validator.IsValid)
+                //{
+                //    var error = "Documento inválido!";
+
+                //    var responseError = new GetInfomationByDocumentResponse(error);
+
+                //    _logger.LogWarning($"{error} -- {getInfomationByDocumentRequest.Document}");
+
+                //    return BadRequest(responseError);
+                //}
+
+                var response = await _mediator.Send(getInfomationByDocumentRequest);
+
+                if (response.Errors.Any())
                 {
-                    var error = "Documento inválido!";
-
-                    var responseError = new GetInfomationByDocumentResponse(error);
-
-                    _logger.LogWarning($"{error} -- {getInfomationByDocumentRequest.Document}");
-
-                    return BadRequest(responseError);
+                    return BadRequest(response.Errors);
                 }
 
-                var result = await _mediator.Send(getInfomationByDocumentRequest);
-
-                return Ok(result);
+                return Ok(response.Result);
             }
             catch (Exception ex)
             {

@@ -2,12 +2,11 @@
 using FluentValidation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace AspNetCore.Example.Api.Validators
+namespace AspNetCore.Example.Application.Validators
 {
-    public class ChangeLinkWithTheCompanyValidator: AbstractValidator<ChangeLinkWithTheCompanyRequest>
+    public class ChangeLinkWithTheCompanyValidator : AbstractValidator<ChangeLinkWithTheCompanyRequest>
     {
         public ChangeLinkWithTheCompanyValidator()
         {

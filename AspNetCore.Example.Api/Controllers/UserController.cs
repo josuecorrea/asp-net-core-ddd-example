@@ -1,7 +1,7 @@
-﻿using AspNetCore.Example.Api.Validators;
-using AspNetCore.Example.Application.Mapping.Param;
+﻿using AspNetCore.Example.Application.Mapping.Param;
 using AspNetCore.Example.Application.Mapping.Request;
 using AspNetCore.Example.Application.Mapping.Response.UserResponse;
+using AspNetCore.Example.Application.Validators;
 using AspNetCore.Example.Domain.Contracts.Repositories;
 using AutoMapper;
 using MediatR;

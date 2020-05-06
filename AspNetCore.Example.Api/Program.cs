@@ -24,7 +24,7 @@ namespace AspNetCore.Example.Api
                 Log.Information("Application Starting Up");
                 CreateHostBuilder(args).Build().Run();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Log.Fatal("Starting error");
             }

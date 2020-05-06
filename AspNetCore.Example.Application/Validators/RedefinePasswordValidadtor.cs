@@ -2,17 +2,16 @@
 using FluentValidation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace AspNetCore.Example.Api.Validators
+namespace AspNetCore.Example.Application.Validators
 {
-    public class RedefinePasswordValidadtor: AbstractValidator<RedefinePasswordRequest>
+    public class RedefinePasswordValidadtor : AbstractValidator<RedefinePasswordRequest>
     {
         public RedefinePasswordValidadtor()
         {
             IdValidate();
-            PasswordValidate();            
+            PasswordValidate();
         }
         private void PasswordValidate()
         {

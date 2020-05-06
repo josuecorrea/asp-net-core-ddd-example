@@ -2,12 +2,11 @@
 using FluentValidation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace AspNetCore.Example.Api.Validators
+namespace AspNetCore.Example.Application.Validators
 {
-    public class DeleteUserValidator: AbstractValidator<DeleteUserRequest>
+    public class DeleteUserValidator : AbstractValidator<DeleteUserRequest>
     {
         public DeleteUserValidator()
         {
@@ -17,7 +16,7 @@ namespace AspNetCore.Example.Api.Validators
         private void IdValidate()
         {
             RuleFor(c => c.Id)
-                .NotNull()                
+                .NotNull()
                 .NotEmpty()
                 .WithMessage("Código inválido. Por favor verificar os dados informados!");
         }

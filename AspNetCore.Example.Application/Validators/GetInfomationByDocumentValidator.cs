@@ -1,7 +1,7 @@
 ﻿using AspNetCore.Example.Application.Mapping.Request;
 using FluentValidation;
 
-namespace AspNetCore.Example.Api.Validators
+namespace AspNetCore.Example.Application.Validators
 {
     public class GetInfomationByDocumentValidator : AbstractValidator<GetInfomationByDocumentRequest>
     {

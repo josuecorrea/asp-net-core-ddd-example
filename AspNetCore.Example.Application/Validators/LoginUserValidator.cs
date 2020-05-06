@@ -1,26 +1,19 @@
 ﻿using AspNetCore.Example.Application.Mapping.Param;
 using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace AspNetCore.Example.Api.Validators
+namespace AspNetCore.Example.Application.Validators
 {
-    public class NewUserValidator : AbstractValidator<NewUserRequest>
+    public class LoginUserValidator : AbstractValidator<LoginUserRequest>
     {
-        public NewUserValidator()
+        public LoginUserValidator()
         {
-            NameValidate();
             EmailValidate();
-            GroupIdValidate();
             PasswordValidate();
         }
 
-        private void NameValidate()
-        {
-            RuleFor(c => c.Name)
-                .NotEmpty()
-                .NotNull()
-                .Length(10, 120)
-                .WithMessage("Nome inválido. Por favor verificar os dados informados!");
-        }
         private void EmailValidate()
         {
             RuleFor(c => c.Email)
@@ -30,14 +23,7 @@ namespace AspNetCore.Example.Api.Validators
                 .Length(10, 120)
                 .WithMessage("E-mail inválido. Por favor verificar os dados informados!");
         }
-        private void GroupIdValidate()
-        {
-            RuleFor(c => c.Group)
-                .IsInEnum()
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Grupo inválido. Por favor verificar os dados informados!");
-        }
+
         private void PasswordValidate()
         {
             RuleFor(c => c.Password)

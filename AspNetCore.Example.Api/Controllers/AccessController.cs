@@ -1,16 +1,13 @@
-﻿using AspNetCore.Example.Api.Validators;
-using AspNetCore.Example.Application.Contracts.Repositories;
+﻿using AspNetCore.Example.Application.Contracts.Repositories;
 using AspNetCore.Example.Application.Mapping.Param;
-using AspNetCore.Example.Domain.Contracts.Repositories;
+using AspNetCore.Example.Application.Validators;
 using AspNetCore.Example.Domain.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Serilog;
 using System;
 using System.Net.Mime;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace AspNetCore.Example.Api.Controllers

@@ -1,13 +1,9 @@
 ﻿using AspNetCore.Example.Application.Mapping.Request;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace AspNetCore.Example.Api.Validators
+namespace AspNetCore.Example.Application.Validators
 {
-    public class UpdateUserValidator: AbstractValidator<UpdateUserRequest>
+    public class UpdateUserValidator : AbstractValidator<UpdateUserRequest>
     {
         public UpdateUserValidator()
         {
