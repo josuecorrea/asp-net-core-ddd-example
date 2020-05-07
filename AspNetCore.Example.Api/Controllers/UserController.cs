@@ -1,13 +1,10 @@
 ﻿using AspNetCore.Example.Application.Mapping.Param;
 using AspNetCore.Example.Application.Mapping.Request;
-using AspNetCore.Example.Domain.Contracts.Repositories;
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Serilog;
 using System;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -38,12 +35,16 @@ namespace AspNetCore.Example.Api.Controllers
         {
             try
             {
-
                 _log.LogInformation("Criando novo usuário: {@newUser}", newUser);
 
-                var result = await _mediator.Send(newUser);
+                var response = await _mediator.Send(newUser);
 
-                return Ok(result);
+                if (!response.IsValid())
+                {
+                    return BadRequest(response.Errors);
+                }
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -63,9 +64,14 @@ namespace AspNetCore.Example.Api.Controllers
             {
                 _log.LogInformation("Alterando usuário: {@updateUser}", updateUser);
 
-                var result = await _mediator.Send(updateUser);
+                var response = await _mediator.Send(updateUser);
 
-                return Ok(result);
+                if (!response.IsValid())
+                {
+                    return BadRequest(response.Errors);
+                }
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -86,9 +92,14 @@ namespace AspNetCore.Example.Api.Controllers
             {
                 _log.LogInformation("Deletando usuário código: {@deleteUserRequest.Id}", deleteUserRequest.Id);
 
-                var result = await _mediator.Send(deleteUserRequest);
+                var response = await _mediator.Send(deleteUserRequest);
 
-                return Ok(result);
+                if (!response.IsValid())
+                {
+                    return BadRequest(response.Errors);
+                }
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -109,9 +120,14 @@ namespace AspNetCore.Example.Api.Controllers
             {
                 _log.LogInformation("Redefinir senha do usuário: {@redefinePassword}", redefinePassword);
 
-                var result = await _mediator.Send(redefinePassword);
+                var response = await _mediator.Send(redefinePassword);
 
-                return Ok(result);
+                if (!response.IsValid())
+                {
+                    return BadRequest(response.Errors);
+                }
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -132,9 +148,14 @@ namespace AspNetCore.Example.Api.Controllers
             {
                 _log.LogInformation("Redefinir lista de empresa do usuário: {@changeLinkWithTheCompanyRequest}", changeLinkWithTheCompanyRequest);
 
-                var result = await _mediator.Send(changeLinkWithTheCompanyRequest);
+                var response = await _mediator.Send(changeLinkWithTheCompanyRequest);
 
-                return Ok(result);
+                if (!response.IsValid())
+                {
+                    return BadRequest(response.Errors);
+                }
+
+                return Ok(response);
             }
             catch (Exception ex)
             {

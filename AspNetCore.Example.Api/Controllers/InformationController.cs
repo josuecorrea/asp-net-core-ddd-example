@@ -36,7 +36,7 @@ namespace AspNetCore.Example.Api.Controllers
 
                 var response = await _mediator.Send(getInfomationByDocumentRequest);
 
-                if (response.Errors.Any())
+                if (!response.IsValid())
                 {
                     return BadRequest(response.Errors);
                 }
