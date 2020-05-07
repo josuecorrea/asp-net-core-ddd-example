@@ -1,7 +1,5 @@
 ﻿using AspNetCore.Example.Application.Mapping.Param;
 using AspNetCore.Example.Application.Mapping.Request;
-using AspNetCore.Example.Application.Mapping.Response.UserResponse;
-using AspNetCore.Example.Application.Validators;
 using AspNetCore.Example.Domain.Contracts.Repositories;
 using AutoMapper;
 using MediatR;
@@ -11,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
-using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
@@ -21,20 +18,13 @@ namespace AspNetCore.Example.Api.Controllers
     [Route("api/user")]
     public class UserController : Controller
     {
-        private readonly IUserRepository _userRepository;
         readonly ILogger<UserController> _log;
-        private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
-        public UserController(IUserRepository userRepository,
-                              ILogger<UserController> log,
-                              IDiagnosticContext diagnosticContext,
-                              IMapper mapper,
+        public UserController(ILogger<UserController> log,
                               IMediator mediator)
         {
-            _userRepository = userRepository;
             _log = log;
-            _mapper = mapper;
             _mediator = mediator;
         }
 
@@ -48,23 +38,12 @@ namespace AspNetCore.Example.Api.Controllers
         {
             try
             {
-                
+
                 _log.LogInformation("Criando novo usuário: {@newUser}", newUser);
 
-                var validator = await new NewUserValidator().ValidateAsync(newUser);
+                var result = await _mediator.Send(newUser);
 
-                if (!validator.IsValid)
-                {
-                    _log.LogError("Erro durante a validação dos dados {@newUser}", newUser);
-
-                    UserResponse responseErro = new UserResponse();
-                    validator.Errors.ToList().ForEach(c => { responseErro.AddUserMessageError(c.ErrorMessage); }) ;
-                    return BadRequest(responseErro);
-                }
-
-                 var result = await _mediator.Send(newUser);
-
-                return Ok(new UserResponse(result).IsValid());
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -82,21 +61,11 @@ namespace AspNetCore.Example.Api.Controllers
         {
             try
             {
-                _log.LogInformation("Alterando usuário: {@updateUser}", updateUser);               
-
-                var validator = await new UpdateUserValidator().ValidateAsync(updateUser);
-
-                if (!validator.IsValid)
-                {
-                    UserResponse responseErro = new UserResponse();
-                    validator.Errors.ToList().ForEach(c => { responseErro.AddUserMessageError(c.ErrorMessage); });
-                    _log.LogError("Erro durante a validação dos dados {@updateUser}", updateUser);
-                    return BadRequest(responseErro);
-                }
+                _log.LogInformation("Alterando usuário: {@updateUser}", updateUser);
 
                 var result = await _mediator.Send(updateUser);
 
-                return Ok(new UserResponse(result).IsValid());
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -114,19 +83,12 @@ namespace AspNetCore.Example.Api.Controllers
         public async Task<IActionResult> DeleteUser([FromBody] DeleteUserRequest deleteUserRequest)
         {
             try
-            {                
-                var validator = await new DeleteUserValidator().ValidateAsync(deleteUserRequest);                
+            {
                 _log.LogInformation("Deletando usuário código: {@deleteUserRequest.Id}", deleteUserRequest.Id);
-                if (!validator.IsValid)
-                {
-                    UserResponse responseErro = new UserResponse();
-                    validator.Errors.ToList().ForEach(c => { responseErro.AddUserMessageError(c.ErrorMessage); });
-                    _log.LogError("Erro durante a validação dos dados {@deleteUserRequest.Id}", deleteUserRequest);
-                    return BadRequest(validator.Errors);
-                }          
+
                 var result = await _mediator.Send(deleteUserRequest);
-                var response = new UserResponse(result);
-                return Ok(response.IsValid());
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -147,20 +109,9 @@ namespace AspNetCore.Example.Api.Controllers
             {
                 _log.LogInformation("Redefinir senha do usuário: {@redefinePassword}", redefinePassword);
 
-                var validator = await new RedefinePasswordValidadtor().ValidateAsync(redefinePassword);
-
-                if (!validator.IsValid)
-                {
-                    _log.LogError("Erro durante a validação dos dados {@newUser}", redefinePassword);
-
-                    UserResponse responseErro = new UserResponse();
-                    validator.Errors.ToList().ForEach(c => { responseErro.AddUserMessageError(c.ErrorMessage); });
-                    return BadRequest(responseErro);
-                }
-
                 var result = await _mediator.Send(redefinePassword);
 
-                return Ok(new UserResponse(result).IsValid());
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -181,24 +132,14 @@ namespace AspNetCore.Example.Api.Controllers
             {
                 _log.LogInformation("Redefinir lista de empresa do usuário: {@changeLinkWithTheCompanyRequest}", changeLinkWithTheCompanyRequest);
 
-                var validator = await new ChangeLinkWithTheCompanyValidator().ValidateAsync(changeLinkWithTheCompanyRequest);
-
-                if (!validator.IsValid)
-                {
-                    _log.LogError("Erro durante a validação dos dados {@changeLinkWithTheCompanyRequest}", changeLinkWithTheCompanyRequest);
-
-                    UserResponse responseErro = new UserResponse();
-                    validator.Errors.ToList().ForEach(c => { responseErro.AddUserMessageError(c.ErrorMessage); });
-                    return BadRequest(responseErro);
-                }
-
                 var result = await _mediator.Send(changeLinkWithTheCompanyRequest);
 
-                return Ok(new UserResponse(result).IsValid());
+                return Ok(result);
             }
             catch (Exception ex)
             {
                 _log.LogError(ex, "Erro ao redefinir lista de empresa usuário: {@changeLinkWithTheCompanyRequest}", changeLinkWithTheCompanyRequest);
+
                 return BadRequest(ex.Message);
             }
         }

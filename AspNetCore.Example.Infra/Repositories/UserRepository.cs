@@ -39,11 +39,13 @@ namespace AspNetCore.Example.Infra.Repositories
             return updateResult.ModifiedCount > 0;
         }
 
-        public async Task DeleteUserById(Guid userId)
+        public async Task<bool> DeleteUserById(Guid userId)
         {
-            await _dbContext.GetColection
+           var deleteResult =  await _dbContext.GetColection
                             .DeleteOneAsync(c => c.Id == userId)
                             .ConfigureAwait(false);
+
+            return deleteResult.DeletedCount > 0;
         }
 
         public async Task<bool> ExistsUser(string userName)

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AspNetCore.Example.Application.Mapping.Request
 {
-    public class DeleteUserRequest:IRequest<string>
+    public class DeleteUserRequest:IRequest<Response.Response>
     {
         public Guid? Id { get; set; }
     }

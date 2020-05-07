@@ -46,11 +46,12 @@ namespace AspNetCore.Example.Api.Controllers
             catch (Exception ex)
             {
                 var erroMessage = "Deu um erro!";
+
                 _logger.LogError(ex, erroMessage);
 
-                 var response = new Response(erroMessage);
+                var response = new Response(erroMessage);
 
-                return BadRequest(response);
+                return BadRequest(response.Errors);
             }           
         }
     }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AspNetCore.Example.Application.Mapping.Param
 {
-    public class NewUserRequest : IRequest<string>
+    public class NewUserRequest : IRequest<Response.Response>
     {
         public NewUserRequest()
         {

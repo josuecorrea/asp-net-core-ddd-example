@@ -1,13 +1,10 @@
 ﻿using AspNetCore.Example.Domain.Enum;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace AspNetCore.Example.Application.Mapping.Result.GetUser
+namespace AspNetCore.Example.Application.Mapping.Dto.User
 {
-    public sealed class GetUserResponse
+    public class GetUserDTO
     {
-        public GetUserResponse(UserGroup group, string name, string document, string email, string picture, bool isActive)
+        public GetUserDTO(UserGroup group, string name, string document, string email, string picture, bool isActive)
         {
             Group = group;
             Name = name;

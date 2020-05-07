@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AspNetCore.Example.Application.Mapping.Request
 {
-    public class ChangeLinkWithTheCompanyRequest:IRequest<string>
+    public class ChangeLinkWithTheCompanyRequest:IRequest<Response.Response>
     {
         public Guid? Id { get; set; }
         public List<UserCompany> UserCompanies { get; set; }

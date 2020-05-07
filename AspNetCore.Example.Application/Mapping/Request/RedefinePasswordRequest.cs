@@ -3,7 +3,7 @@ using System;
 
 namespace AspNetCore.Example.Application.Mapping.Request
 {
-    public class RedefinePasswordRequest:IRequest<string>
+    public class RedefinePasswordRequest:IRequest<Response.Response>
     {
         public Guid? Id { get; set; }
         public string OldPassword { get; set; }

@@ -10,7 +10,7 @@ namespace AspNetCore.Example.Domain.Contracts.Repositories
         Task<bool> ExistsUser(string userName);
         Task<User> Login(string email);
         Task<List<User>> GetUsersByMasterId(Guid userMasterId);
-        Task DeleteUserById(Guid userId);
+        Task<bool> DeleteUserById(Guid userId);
         Task<bool> UpdateUser(User user);
         Task<bool> SetNewPassword(Guid id, string passwordNew);
         Task<User> GetUserById(Guid Id);
