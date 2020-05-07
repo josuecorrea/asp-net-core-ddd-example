@@ -34,20 +34,6 @@ namespace AspNetCore.Example.Api.Controllers
             {
                 var getInfomationByDocumentRequest = new GetInfomationByDocumentRequest { Document = document };                
 
-                //TODO: CRIA VALIDATOR DO MEDIATOR
-                //var validator = await new GetInfomationByDocumentValidator().ValidateAsync(getInfomationByDocumentRequest);
-
-                //if (!validator.IsValid)
-                //{
-                //    var error = "Documento inválido!";
-
-                //    var responseError = new GetInfomationByDocumentResponse(error);
-
-                //    _logger.LogWarning($"{error} -- {getInfomationByDocumentRequest.Document}");
-
-                //    return BadRequest(responseError);
-                //}
-
                 var response = await _mediator.Send(getInfomationByDocumentRequest);
 
                 if (response.Errors.Any())
