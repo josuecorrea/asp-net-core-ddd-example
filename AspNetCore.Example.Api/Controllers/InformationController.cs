@@ -1,5 +1,5 @@
 ﻿using AspNetCore.Example.Application.Mapping.Request;
-using AspNetCore.Example.Application.Mapping.Result.GetInfomationByDocument;
+using AspNetCore.Example.Application.Mapping.Response;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +48,7 @@ namespace AspNetCore.Example.Api.Controllers
                 var erroMessage = "Deu um erro!";
                 _logger.LogError(ex, erroMessage);
 
-                 var response = new GetInfomationByDocumentResponse(erroMessage);
+                 var response = new Response(erroMessage);
 
                 return BadRequest(response);
             }           

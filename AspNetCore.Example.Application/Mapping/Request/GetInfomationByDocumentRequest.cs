@@ -1,5 +1,4 @@
-﻿using AspNetCore.Example.Application.Mapping.Result.GetInfomationByDocument;
-using MediatR;
+﻿using MediatR;
 
 
 namespace AspNetCore.Example.Application.Mapping.Request

@@ -1,12 +1,11 @@
-﻿using AutoMapper;
-using AspNetCore.Example.Application.Mapping.Request;
-using AspNetCore.Example.Application.Mapping.Result.GetInfomationByDocument;
+﻿using AspNetCore.Example.Application.Mapping.Request;
+using AspNetCore.Example.Application.Mapping.Response;
 using AspNetCore.Example.Domain.Entities;
 using AspNetCore.Example.Infra.Repositories.Interfaces;
+using AutoMapper;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using AspNetCore.Example.Application.Mapping.Response;
 
 namespace AspNetCore.Example.Application.Handler
 {
@@ -23,11 +22,11 @@ namespace AspNetCore.Example.Application.Handler
 
         public async Task<Response> Handle(GetInfomationByDocumentRequest request, CancellationToken cancellationToken)
         {
-            //var companyInformation = await _companyGateway.GetCompanyInformationByCnpj(request.Document);
+            var companyInformation = await _companyGateway.GetCompanyInformationByCnpj(request.Document);
 
-            //var companyInformationDto = _mapper.Map<CompanyInformationDto>(companyInformation);            
+           var companyInformationDto = _mapper.Map<CompanyInformationDto>(companyInformation);            
 
-            return await Task.FromResult(new Response(new CompanyInformationDto()));
+            return new Response(companyInformationDto);
         }            
     }
 }

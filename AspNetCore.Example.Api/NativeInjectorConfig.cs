@@ -39,7 +39,6 @@ namespace AspNetCore.Example.Api
                .FindValidatorsInAssembly(assembly)
                .ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
 
-
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FailFastRequestBehavior<,>));
 
             //BUS
