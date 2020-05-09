@@ -2,6 +2,7 @@
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -13,9 +14,11 @@ namespace AspNetCore.Example.Application.Behaviors
          where TRequest : IRequest<TResponse> where TResponse : Response
     {
         private readonly IEnumerable<IValidator> _validators;
+        private readonly ILogger<Response> _logger;
 
-        public FailFastRequestBehavior(IEnumerable<IValidator<TRequest>> validators)
+        public FailFastRequestBehavior(IEnumerable<IValidator<TRequest>> validators, ILogger<Response> logger)
         {
+            _logger = logger;
             _validators = validators;
         }
 
@@ -32,13 +35,16 @@ namespace AspNetCore.Example.Application.Behaviors
                 : next();
         }
 
-        private static Task<TResponse> Errors(IEnumerable<ValidationFailure> failures)
+        private Task<TResponse> Errors(IEnumerable<ValidationFailure> failures)
         {
             var response = new Response();
 
             foreach (var failure in failures)
             {
                 response.AddError(failure.ErrorMessage);
+
+                _logger.LogError($"Error ao validar dados: Propriedade: {failure.PropertyName} -- Erro: {failure.ErrorMessage} -- Type: { failure.ErrorCode} ");
+
             }
 
             return Task.FromResult(response as TResponse);
