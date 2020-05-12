@@ -10,9 +10,9 @@ namespace AspNetCore.Example.Api
     {
         public static void Main(string[] args)
         {
-                var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.Development.json")
-                .Build();
+            var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.Development.json")
+            .Build();
 
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
@@ -36,7 +36,7 @@ namespace AspNetCore.Example.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                       
+
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
