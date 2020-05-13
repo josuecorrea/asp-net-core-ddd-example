@@ -24,6 +24,8 @@ namespace AspNetCore.Example.Application.Behaviors
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
+            _logger.LogInformation("Entering LoggingBehavior with request {Name}", typeof(TRequest).Name);           
+
             var failures = _validators
                 .Select(v => v.Validate(request))
                 .SelectMany(result => result.Errors)
