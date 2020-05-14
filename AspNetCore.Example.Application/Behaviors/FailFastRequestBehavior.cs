@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 namespace AspNetCore.Example.Application.Behaviors
 {
     public class FailFastRequestBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-         where TRequest : IRequest<TResponse> where TResponse : Response
+         where TRequest : IRequest<TResponse> where TResponse : Response, new()
     {
         private readonly IEnumerable<IValidator> _validators;
-        private readonly ILogger<Response> _logger;
+        private readonly ILogger<TResponse> _logger;
 
-        public FailFastRequestBehavior(IEnumerable<IValidator<TRequest>> validators, ILogger<Response> logger)
+        public FailFastRequestBehavior(IEnumerable<IValidator<TRequest>> validators, ILogger<TResponse> logger)
         {
             _logger = logger;
             _validators = validators;
@@ -39,7 +39,7 @@ namespace AspNetCore.Example.Application.Behaviors
 
         private Task<TResponse> Errors(IEnumerable<ValidationFailure> failures)
         {
-            var response = new Response();
+            var response = new TResponse();
 
             foreach (var failure in failures)
             {
