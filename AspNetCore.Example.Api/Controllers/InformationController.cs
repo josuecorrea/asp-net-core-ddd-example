@@ -40,7 +40,7 @@ namespace AspNetCore.Example.Api.Controllers
                     return BadRequest(response.Errors);
                 }
 
-                return Ok(response.Result);
+                return Ok(response.CompanyInformationDto);
             }
             catch (Exception ex)
             {

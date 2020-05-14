@@ -4,6 +4,7 @@ using AspNetCore.Example.Application.Mapping.Request;
 using AspNetCore.Example.Domain.Entities;
 using AspNetCore.Example.Domain.Entities.UserAgg;
 using AspNetCore.Example.Infra.Models.CompanyInformation;
+using AspNetCore.Example.Application.Mapping.Dto.CompanyInformation;
 
 namespace AspNetCore.Example.Api.Mapper
 {

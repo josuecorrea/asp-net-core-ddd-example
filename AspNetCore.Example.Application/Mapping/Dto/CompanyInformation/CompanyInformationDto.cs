@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AspNetCore.Example.Domain.Entities
+﻿namespace AspNetCore.Example.Application.Mapping.Dto.CompanyInformation
 {
     public class CompanyInformationDto
     {   
