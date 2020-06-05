@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
@@ -53,5 +54,35 @@ namespace AspNetCore.Example.Api.Controllers
                 return BadRequest(response.Errors);
             }           
         }
+
+
+        [Route("getinfomation")]
+        [HttpGet]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetInfomation([FromHeader]string name, [FromHeader]IEnumerable<int> lista)
+        {
+            try
+            {
+
+                var _name = Request.Headers["Name"];
+                var _lista = Request.Headers["Lista"];
+
+                var result = await Task.FromResult(new TesteParam());
+
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+    }
+
+    public class TesteParam
+    {
+        public string Name { get; set; }
     }
 }
