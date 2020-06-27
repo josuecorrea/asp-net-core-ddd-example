@@ -65,14 +65,12 @@ namespace AspNetCore.Example.Api.Controllers
         {
             try
             {
-
                 var _name = Request.Headers["Name"];
                 var _lista = Request.Headers["Lista"];
 
                 var result = await Task.FromResult(new TesteParam());
 
                 return Ok();
-
             }
             catch (Exception ex)
             {

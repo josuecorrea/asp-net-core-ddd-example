@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 namespace AspNetCore.Example.Api.Controllers
 {
     [Route("api/access")]
-    //[ApiController]
     public class AccessController : Controller
     {
         readonly ILogger<AccessController> _log;
